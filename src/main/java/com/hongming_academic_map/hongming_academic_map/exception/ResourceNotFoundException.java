@@ -21,6 +21,14 @@ public class ResourceNotFoundException extends RuntimeException {
         super(message, cause);
     }
 
+    // 添加新的构造函数
+    public ResourceNotFoundException(String resourceType, String identifier, Long identifierValue) {
+        super(String.format("%s not found with %s: '%s'", resourceType, identifier, identifierValue));
+        this.resourceType = resourceType;
+        this.identifier = identifier;
+        this.identifierValue = identifierValue;
+    }
+
     // Getters for additional exception information
     public String getResourceType() {
         return resourceType;

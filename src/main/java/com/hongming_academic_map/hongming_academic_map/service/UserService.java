@@ -2,6 +2,7 @@ package com.hongming_academic_map.hongming_academic_map.service;
 
 import com.hongming_academic_map.hongming_academic_map.exception.EmailAlreadyExistsException;
 import com.hongming_academic_map.hongming_academic_map.exception.UsernameAlreadyExistsException;
+import com.hongming_academic_map.hongming_academic_map.exception.ResourceNotFoundException;
 import com.hongming_academic_map.hongming_academic_map.model.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class UserService {
         user.setRoles(Collections.singleton(
                 roleRepository.findByName("ROLE_USER")
                         .orElseThrow(() -> new RuntimeException("Error: Role USER not found."))
-        );
+        ));
 
         return userRepository.save(user);
     }

@@ -1,5 +1,7 @@
 package com.hongming_academic_map.hongming_academic_map.service;
 
+import com.hongming_academic_map.hongming_academic_map.dto.SearchRequest;
+import com.hongming_academic_map.hongming_academic_map.dto.SearchResult;
 import com.hongming_academic_map.hongming_academic_map.model.Paper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +38,6 @@ public class SearchService {
     }
 
     public Page<Paper> advancedSearch(String title, String author, String keyword, String field, Pageable pageable) {
-        // 这里可以实现更复杂的多条件组合搜索
         if (title != null) {
             return searchPapers(title, pageable);
         } else if (author != null) {
@@ -47,5 +48,23 @@ public class SearchService {
             return searchByField(field, pageable);
         }
         return paperRepository.findAll(pageable);
+    }
+
+    public SearchResult search(SearchRequest searchRequest) {
+        Page<Paper> papers = advancedSearch(
+            searchRequest.getQuery(),
+            searchRequest.getAuthor(),
+            searchRequest.getKeyword(),
+            searchRequest.getField(),
+            searchRequest.getPageable()
+        );
+
+        SearchResult result = new SearchResult();
+        result.setPapers(papers);
+        result.setTotalResults(papers.getTotalElements());
+        result.setCurrentPage(papers.getNumber());
+        result.setTotalPages(papers.getTotalPages());
+
+        return result;
     }
 }

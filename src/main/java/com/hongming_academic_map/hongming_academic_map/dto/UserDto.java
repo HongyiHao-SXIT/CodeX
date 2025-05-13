@@ -13,4 +13,5 @@ public class UserDto {
     private String institution;
     private String researchField;
     private List<String> roles;
+    private String password; 
 }

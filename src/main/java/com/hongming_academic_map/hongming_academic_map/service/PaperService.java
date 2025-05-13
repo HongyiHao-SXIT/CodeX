@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hongming_academic_map.hongming_academic_map.repository.PaperRepository;
 
 import java.io.IOException;
-import java.util.List;
 
 @Service
 public class PaperService {

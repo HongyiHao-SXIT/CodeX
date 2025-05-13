@@ -15,8 +15,3 @@ public class Role {
     @Column(length = 20)
     private ERole name;
 }
-
-public enum ERole {
-    ROLE_USER,
-    ROLE_ADMIN
-}

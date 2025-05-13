@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HongMing_Academic_Map_Login</title>
+    <title>登录</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>Login</h2>
-    <form action="" method="post">
-    Username: <input type="text" name="username"><br>
-    Password:<input type="password" name="password"><br>
-    <input type="button" value="register"><br>
-    <input type="submit" value="Login">
+<div class="container" id="login-container">
+    <form id="login-form">
+        <h1>登录</h1>
+        <input type="text" id="login-username" placeholder="用户名" required>
+        <input type="password" id="login-password" placeholder="密码" required>
+        <button type="submit">登录</button>
+        <p>没有账号？<a href="register.html">去注册</a></p>
     </form>
-
-    
+</div>
+<script src="main.js"></script>
 </body>
 </html>

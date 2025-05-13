@@ -1,11 +1,819 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HongMing Academic Map</title>
+    <title>学术搜索</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#0FC6C2',
+                        accent: '#722ED1',
+                        dark: '#1D2129',
+                        light: '#F2F3F5',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .search-shadow {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 10px 25px rgba(22, 93, 255, 0.1);
+            }
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
+            }
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+                100% { transform: translateY(0px); }
+            }
+        }
+    </style>
 </head>
-<body>
-    <h2>Hello</h2>
+<body class="font-inter bg-light text-dark min-h-screen flex flex-col">
+    <!-- 导航栏 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="text-primary text-3xl">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h1 class="text-xl font-bold text-primary">学术搜索</h1>
+            </div>
+            
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-dark hover:text-primary transition-colors font-medium">首页</a>
+                <a href="#" class="text-gray-500 hover:text-primary transition-colors">文献</a>
+                <a href="#" class="text-gray-500 hover:text-primary transition-colors">作者</a>
+                <a href="#" class="text-gray-500 hover:text-primary transition-colors">期刊</a>
+                <a href="#" class="text-gray-500 hover:text-primary transition-colors">会议</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <button class="hidden md:block px-4 py-2 text-primary border border-primary rounded-full hover:bg-primary/5 transition-colors" id="login-btn">登录</button>
+                <button class="px-4 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg" id="register-btn">注册</button>
+                <button class="md:hidden text-dark text-xl">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="flex-grow">
+        <!-- 搜索区域 -->
+        <section class="py-16 md:py-24 bg-gradient-to-b from-white to-blue-50">
+            <div class="container mx-auto px-4 text-center">
+                <div class="max-w-3xl mx-auto">
+                    <div class="text-4xl md:text-5xl font-bold mb-6">
+                        发现学术世界的<span class="text-primary">无限可能</span>
+                    </div>
+                    <p class="text-gray-600 text-lg mb-10">
+                        搜索、发现和分享学术研究成果，连接全球学者的智慧
+                    </p>
+                    
+                    <div class="relative search-shadow rounded-full overflow-hidden">
+                        <input type="text" placeholder="搜索学术论文、作者或关键词..." 
+                            class="w-full py-4 px-6 pr-24 text-lg focus:outline-none">
+                        <button class="absolute right-2 top-2 bottom-2 bg-primary text-white px-6 rounded-full hover:bg-primary/90 transition-colors">
+                            <i class="fa-solid fa-search mr-2"></i>搜索
+                        </button>
+                    </div>
+                    
+                    <div class="flex flex-wrap justify-center gap-3 mt-6 text-sm text-gray-500">
+                        <span>热门搜索:</span>
+                        <a href="#" class="hover:text-primary transition-colors">人工智能</a>
+                        <a href="#" class="hover:text-primary transition-colors">机器学习</a>
+                        <a href="#" class="hover:text-primary transition-colors">计算机视觉</a>
+                        <a href="#" class="hover:text-primary transition-colors">自然语言处理</a>
+                        <a href="#" class="hover:text-primary transition-colors">区块链</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 统计数据 -->
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div class="p-6 bg-blue-50 rounded-xl">
+                        <div class="text-4xl font-bold text-primary mb-2" id="stats-papers">0</div>
+                        <div class="text-gray-600">学术论文</div>
+                    </div>
+                    <div class="p-6 bg-green-50 rounded-xl">
+                        <div class="text-4xl font-bold text-green-600 mb-2" id="stats-authors">0</div>
+                        <div class="text-gray-600">研究作者</div>
+                    </div>
+                    <div class="p-6 bg-purple-50 rounded-xl">
+                        <div class="text-4xl font-bold text-purple-600 mb-2" id="stats-citations">0</div>
+                        <div class="text-gray-600">引用次数</div>
+                    </div>
+                    <div class="p-6 bg-orange-50 rounded-xl">
+                        <div class="text-4xl font-bold text-orange-600 mb-2" id="stats-journals">0</div>
+                        <div class="text-gray-600">学术期刊</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 最新上传 -->
+        <section class="py-16 bg-light">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center mb-10">
+                    <h2 class="text-3xl font-bold">最新上传</h2>
+                    <a href="#" class="text-primary hover:underline flex items-center">
+                        查看全部 <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 论文卡片 1 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-blue-100 text-primary text-xs font-medium px-2.5 py-0.5 rounded">计算机科学</span>
+                                <span class="text-gray-500 text-sm">2025-05-10</span>
+                            </div>
+                            <h3 class="font-bold text-lg mb-3">基于深度学习的图像语义分割技术研究进展</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-3">本文综述了近年来基于深度学习的图像语义分割技术的研究进展，分析了不同网络架构的优缺点，并探讨了该领域的未来发展方向。</p>
+                            <div class="flex items-center mb-4">
+                                <img src="https://picsum.photos/200/200?random=1" alt="作者头像" class="w-8 h-8 rounded-full mr-2">
+                                <span class="text-sm text-gray-700">张明, 李强, 王芳</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fa-solid fa-download mr-1"></i> 245
+                                    <i class="fa-solid fa-star ml-3 mr-1"></i> 56
+                                </div>
+                                <button class="text-primary hover:text-primary/80 transition-colors">
+                                    <i class="fa-solid fa-file-pdf"></i> 下载
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 论文卡片 2 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-green-100 text-green-600 text-xs font-medium px-2.5 py-0.5 rounded">机器学习</span>
+                                <span class="text-gray-500 text-sm">2025-05-09</span>
+                            </div>
+                            <h3 class="font-bold text-lg mb-3">多模态预训练模型在医疗图像分析中的应用</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-3">本研究提出了一种新型的多模态预训练模型，将文本和医学图像信息进行融合，显著提高了疾病诊断的准确率，并在多个医疗数据集上验证了方法的有效性。</p>
+                            <div class="flex items-center mb-4">
+                                <img src="https://picsum.photos/200/200?random=2" alt="作者头像" class="w-8 h-8 rounded-full mr-2">
+                                <span class="text-sm text-gray-700">陈华, 赵伟, 刘洋</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fa-solid fa-download mr-1"></i> 189
+                                    <i class="fa-solid fa-star ml-3 mr-1"></i> 42
+                                </div>
+                                <button class="text-primary hover:text-primary/80 transition-colors">
+                                    <i class="fa-solid fa-file-pdf"></i> 下载
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 论文卡片 3 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-purple-100 text-purple-600 text-xs font-medium px-2.5 py-0.5 rounded">自然语言处理</span>
+                                <span class="text-gray-500 text-sm">2025-05-08</span>
+                            </div>
+                            <h3 class="font-bold text-lg mb-3">基于大型语言模型的学术文献自动摘要方法</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-3">本文提出了一种基于大型语言模型的学术文献自动摘要方法，能够准确提取文献的核心内容和创新点，为科研人员提供高效的文献阅读辅助。</p>
+                            <div class="flex items-center mb-4">
+                                <img src="https://picsum.photos/200/200?random=3" alt="作者头像" class="w-8 h-8 rounded-full mr-2">
+                                <span class="text-sm text-gray-700">林志, 黄雯, 吴迪</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fa-solid fa-download mr-1"></i> 312
+                                    <i class="fa-solid fa-star ml-3 mr-1"></i> 78
+                                </div>
+                                <button class="text-primary hover:text-primary/80 transition-colors">
+                                    <i class="fa-solid fa-file-pdf"></i> 下载
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 上传论文区域 -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="bg-gradient-to-r from-primary/90 to-accent/90 rounded-2xl p-8 md:p-12 shadow-xl">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">分享你的研究成果</h2>
+                            <p class="text-white/90 text-lg mb-6">上传你的学术论文，与全球研究者共享知识，提高学术影响力。</p>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check-circle text-white mt-1 mr-3"></i>
+                                    <span class="text-white/90">快速传播你的研究成果</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check-circle text-white mt-1 mr-3"></i>
+                                    <span class="text-white/90">获得更多的引用和关注</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check-circle text-white mt-1 mr-3"></i>
+                                    <span class="text-white/90">与同行进行学术交流和合作</span>
+                                </li>
+                            </ul>
+                            <button class="px-8 py-3 bg-white text-primary font-medium rounded-full hover:bg-white/90 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 duration-300">
+                                <i class="fa-solid fa-upload mr-2"></i> 上传论文
+                            </button>
+                        </div>
+                        <div class="hidden md:block relative">
+                            <img src="https://picsum.photos/600/400?random=4" alt="学术研究" class="rounded-xl shadow-lg animate-float">
+                            <div class="absolute -bottom-4 -right-4 bg-white p-4 rounded-lg shadow-lg">
+                                <div class="text-sm text-gray-600">已有 <span class="font-bold text-primary">12,543</span> 位学者选择分享</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 热门作者 -->
+        <section class="py-16 bg-light">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center mb-10">
+                    <h2 class="text-3xl font-bold">热门作者</h2>
+                    <a href="#" class="text-primary hover:underline flex items-center">
+                        查看全部 <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    <!-- 作者卡片 1 -->
+                    <div class="bg-white rounded-xl p-6 text-center shadow-sm card-hover">
+                        <img src="https://picsum.photos/200/200?random=5" alt="作者头像" class="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-white shadow-md">
+                        <h3 class="font-bold mb-1">李教授</h3>
+                        <p class="text-sm text-gray-500 mb-3">人工智能研究所</p>
+                        <div class="flex justify-center space-x-1 text-yellow-400 mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            <span class="font-medium">32</span> 篇论文 · <span class="font-medium">2,541</span> 引用
+                        </div>
+                    </div>
+                    
+                    <!-- 作者卡片 2-5 (类似结构) -->
+                    <div class="bg-white rounded-xl p-6 text-center shadow-sm card-hover">
+                        <img src="https://picsum.photos/200/200?random=6" alt="作者头像" class="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-white shadow-md">
+                        <h3 class="font-bold mb-1">王博士</h3>
+                        <p class="text-sm text-gray-500 mb-3">计算机科学系</p>
+                        <div class="flex justify-center space-x-1 text-yellow-400 mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            <span class="font-medium">28</span> 篇论文 · <span class="font-medium">1,872</span> 引用
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 text-center shadow-sm card-hover">
+                        <img src="https://picsum.photos/200/200?random=7" alt="作者头像" class="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-white shadow-md">
+                        <h3 class="font-bold mb-1">张教授</h3>
+                        <p class="text-sm text-gray-500 mb-3">数据科学中心</p>
+                        <div class="flex justify-center space-x-1 text-yellow-400 mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            <span class="font-medium">45</span> 篇论文 · <span class="font-medium">3,208</span> 引用
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 text-center shadow-sm card-hover">
+                        <img src="https://picsum.photos/200/200?random=8" alt="作者头像" class="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-white shadow-md">
+                        <h3 class="font-bold mb-1">陈博士</h3>
+                        <p class="text-sm text-gray-500 mb-3">机器学习实验室</p>
+                        <div class="flex justify-center space-x-1 text-yellow-400 mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            <span class="font-medium">22</span> 篇论文 · <span class="font-medium">1,456</span> 引用
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 text-center shadow-sm card-hover">
+                        <img src="https://picsum.photos/200/200?random=9" alt="作者头像" class="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-white shadow-md">
+                        <h3 class="font-bold mb-1">刘教授</h3>
+                        <p class="text-sm text-gray-500 mb-3">计算机视觉组</p>
+                        <div class="flex justify-center space-x-1 text-yellow-400 mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star-half-stroke"></i>
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            <span class="font-medium">37</span> 篇论文 · <span class="font-medium">2,879</span> 引用
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 学术社区 -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">加入我们的学术社区</h2>
+                    <p class="text-gray-600 text-lg">与全球研究者建立联系，分享知识，共同进步</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-blue-50 rounded-xl p-8 text-center">
+                        <div class="w-16 h-16 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa-solid fa-users text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">连接学术同行</h3>
+                        <p class="text-gray-600">与全球学者建立联系，拓展学术网络，发现合作机会。</p>
+                    </div>
+                    
+                    <div class="bg-green-50 rounded-xl p-8 text-center">
+                        <div class="w-16 h-16 bg-green-600/20 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa-solid fa-comments text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">参与学术讨论</h3>
+                        <p class="text-gray-600">加入研究主题讨论，分享见解，获取反馈，深化研究。</p>
+                    </div>
+                    
+                    <div class="bg-purple-50 rounded-xl p-8 text-center">
+                        <div class="w-16 h-16 bg-purple-600/20 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa-solid fa-calendar-alt text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">关注学术活动</h3>
+                        <p class="text-gray-600">及时获取学术会议、研讨会等活动信息，拓展学术视野。</p>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <button class="px-8 py-3 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 duration-300">
+                        立即注册 <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div class="text-primary text-3xl">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <h2 class="text-xl font-bold text-white">学术搜索</h2>
+                    </div>
+                    <p class="text-gray-400 mb-6">连接全球学术资源，助力科研创新</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">快速链接</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">首页</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">搜索文献</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">热门作者</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">学术期刊</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">会议信息</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">资源中心</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">科研工具</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">论文写作</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">学术规范</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">开放获取</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">数据共享</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">联系我们</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-envelope text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">contact@academicsearch.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-phone text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">+86 123 4567 8910</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-map-marker-alt text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">北京市海淀区中关村南大街5号</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 学术搜索. 保留所有权利.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-primary text-sm transition-colors">隐私政策</a>
+                    <a href="#" class="text-gray-500 hover:text-primary text-sm transition-colors">使用条款</a>
+                    <a href="#" class="text-gray-500 hover:text-primary text-sm transition-colors">帮助中心</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 模态框：登录 -->
+    <div class="fixed inset-0 bg-black/50 z-50 hidden" id="login-modal">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl max-w-md w-full">
+                <div class="p-6 border-b">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold">用户登录</h3>
+                        <button class="text-gray-500 hover:text-gray-700 transition-colors" id="close-login-modal">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <form>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-medium mb-2" for="login-email">
+                                邮箱
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-envelope text-gray-400"></i>
+                                </div>
+                                <input class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" id="login-email" type="email" placeholder="your@email.com">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2" for="login-password">
+                                密码
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-lock text-gray-400"></i>
+                                </div>
+                                <input class="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" id="login-password" type="password" placeholder="••••••••">
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600" id="toggle-password">
+                                    <i class="fa-solid fa-eye-slash"></i>
+                                </button>
+                            </div>
+                            <div class="flex justify-end mt-2">
+                                <a href="#" class="text-sm text-primary hover:underline">忘记密码?</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center mb-6">
+                            <input id="remember-me" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                                记住我
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg">
+                            登录
+                        </button>
+                        
+                        <div class="mt-6 text-center">
+                            <span class="text-sm text-gray-600">还没有账号? </span>
+                            <button type="button" class="text-sm text-primary font-medium hover:underline" id="show-register">
+                                立即注册
+                            </button>
+                        </div>
+                        
+                        <div class="my-6 relative">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-300"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-2 bg-white text-gray-500">或者使用以下方式登录</span>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4">
+                            <button type="button" class="flex justify-center items-center py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fa-brands fa-google text-red-500"></i>
+                            </button>
+                            <button type="button" class="flex justify-center items-center py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fa-brands fa-facebook text-blue-600"></i>
+                            </button>
+                            <button type="button" class="flex justify-center items-center py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fa-brands fa-twitter text-blue-400"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框：注册 -->
+    <div class="fixed inset-0 bg-black/50 z-50 hidden" id="register-modal">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl max-w-md w-full">
+                <div class="p-6 border-b">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold">用户注册</h3>
+                        <button class="text-gray-500 hover:text-gray-700 transition-colors" id="close-register-modal">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <form>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-2" for="first-name">
+                                    姓氏
+                                </label>
+                                <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" id="first-name" type="text" placeholder="输入您的姓氏">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-2" for="last-name">
+                                    名字
+                                </label>
+                                <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" id="last-name" type="text" placeholder="输入您的名字">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-medium mb-2" for="register-email">
+                                邮箱
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-envelope text-gray-400"></i>
+                                </div>
+                                <input class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" id="register-email" type="email" placeholder="your@email.com">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-medium mb-2" for="register-institution">
+                                机构/学校
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-building text-gray-400"></i>
+                                </div>
+                                <input class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" id="register-institution" type="text" placeholder="输入您的机构或学校名称">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-medium mb-2" for="register-password">
+                                密码
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-lock text-gray-400"></i>
+                                </div>
+                                <input class="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" id="register-password" type="password" placeholder="至少8个字符">
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600" id="toggle-register-password">
+                                    <i class="fa-solid fa-eye-slash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2" for="register-confirm-password">
+                                确认密码
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-lock text-gray-400"></i>
+                                </div>
+                                <input class="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" id="register-confirm-password" type="password" placeholder="再次输入密码">
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600" id="toggle-register-confirm-password">
+                                    <i class="fa-solid fa-eye-slash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start mb-6">
+                            <input id="terms" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded mt-1">
+                            <label for="terms" class="ml-2 block text-sm text-gray-600">
+                                我同意<a href="#" class="text-primary hover:underline">服务条款</a>和<a href="#" class="text-primary hover:underline">隐私政策</a>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg">
+                            注册
+                        </button>
+                        
+                        <div class="mt-6 text-center">
+                            <span class="text-sm text-gray-600">已有账号? </span>
+                            <button type="button" class="text-sm text-primary font-medium hover:underline" id="show-login">
+                                返回登录
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                navbar.classList.add('shadow-md', 'py-2');
+                navbar.classList.remove('py-3');
+            } else {
+                navbar.classList.remove('shadow-md', 'py-2');
+                navbar.classList.add('py-3');
+            }
+        });
+        
+        // 数字统计动画
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            const range = end - start;
+            const minTimer = 50;
+            let stepTime = Math.abs(Math.floor(duration / range));
+            stepTime = Math.max(stepTime, minTimer);
+            let startTime = new Date().getTime();
+            let endTime = startTime + duration;
+            let timer;
+
+            function run() {
+                let now = new Date().getTime();
+                let remaining = Math.max((endTime - now) / duration, 0);
+                let value = Math.round(end - (remaining * range));
+                obj.innerHTML = value.toLocaleString();
+                if (value == end) {
+                    clearInterval(timer);
+                }
+            }
+
+            timer = setInterval(run, stepTime);
+            run();
+        }
+        
+        // 当元素进入视口时触发动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateValue('stats-papers', 0, 125436, 2000);
+                    animateValue('stats-authors', 0, 56789, 2000);
+                    animateValue('stats-citations', 0, 8765432, 2000);
+                    animateValue('stats-journals', 0, 1234, 2000);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(document.getElementById('stats-papers'));
+        
+        // 模态框控制
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const loginModal = document.getElementById('login-modal');
+        const registerModal = document.getElementById('register-modal');
+        const closeLoginModal = document.getElementById('close-login-modal');
+        const closeRegisterModal = document.getElementById('close-register-modal');
+        const showRegister = document.getElementById('show-register');
+        const showLogin = document.getElementById('show-login');
+        
+        loginBtn.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+            registerModal.classList.add('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        registerBtn.addEventListener('click', () => {
+            registerModal.classList.remove('hidden');
+            loginModal.classList.add('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        function hideAllModals() {
+            loginModal.classList.add('hidden');
+            registerModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        
+        closeLoginModal.addEventListener('click', hideAllModals);
+        closeRegisterModal.addEventListener('click', hideAllModals);
+        
+        showRegister.addEventListener('click', () => {
+            registerModal.classList.remove('hidden');
+            loginModal.classList.add('hidden');
+        });
+        
+        showLogin.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+            registerModal.classList.add('hidden');
+        });
+        
+        // 点击模态框外部关闭
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                hideAllModals();
+            }
+        });
+        
+        registerModal.addEventListener('click', (e) => {
+            if (e.target === registerModal) {
+                hideAllModals();
+            }
+        });
+        
+        // 密码显示切换
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('login-password');
+        
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.innerHTML = type === 'password' ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>';
+        });
+        
+        // 注册密码显示切换
+        const toggleRegisterPassword = document.getElementById('toggle-register-password');
+        const registerPasswordInput = document.getElementById('register-password');
+        
+        toggleRegisterPassword.addEventListener('click', () => {
+            const type = registerPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            registerPasswordInput.setAttribute('type', type);
+            toggleRegisterPassword.innerHTML = type === 'password' ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>';
+        });
+        
+        // 注册确认密码显示切换
+        const toggleRegisterConfirmPassword = document.getElementById('toggle-register-confirm-password');
+        const registerConfirmPasswordInput = document.getElementById('register-confirm-password');
+        
+        toggleRegisterConfirmPassword.addEventListener('click', () => {
+            const type = registerConfirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            registerConfirmPasswordInput.setAttribute('type', type);
+            toggleRegisterConfirmPassword.innerHTML = type === 'password' ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>';
+        });
+    </script>
 </body>
 </html>
+    
