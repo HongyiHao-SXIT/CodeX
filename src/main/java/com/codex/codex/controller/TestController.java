@@ -1,6 +1,8 @@
 package com.codex.codex.controller;
 
 import java.util.HashMap;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
  
@@ -12,4 +14,10 @@ public class TestController{
         map.put("title", "欢迎来到Spring Boot!");
         return "/index";
     }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+}
+
 }

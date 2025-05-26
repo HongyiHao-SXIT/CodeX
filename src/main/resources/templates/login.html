@@ -2,27 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Code-X</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <title>Login | Code-X</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <script th:src="@{/js/login.js}" defer></script>
 </head>
 <body>
-    <div class="container">
-        <h2>Welcome to Code-X</h2>
-        <hr>
-        <form action="login" method="post" id="loginForm">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" name="username" id="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-            <input type="submit" value="Submit" class="submit-btn">
-            <p id="error-message" class="error"></p>
-        </form>
-    </div>
+<div class="login-container">
+    <h2>Welcome to <span class="brand">Code-X</span></h2>
+    <form action="#" method="post" th:action="@{/login}" id="loginForm">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+        <p class="link">Don't have an account? <a th:href="@{/register}">Register</a></p>
+        <p class="error-message" id="error-message"></p>
+    </form>
+</div>
 </body>
 </html>
