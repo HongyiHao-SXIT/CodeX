@@ -1,0 +1,129 @@
+/* General Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body */
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    padding: 1rem;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar a.btn {
+    margin-left: 0.5rem;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+    margin-bottom: 1rem;
+}
+
+/* Cards */
+.card {
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+    background-color: #fff;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #0069d9;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-outline-light:hover {
+    background-color: white;
+    color: #000;
+}
+
+/* Forms */
+.form-control {
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+/* Container and Layout */
+.container {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Course Card */
+.course-card {
+    border-left: 5px solid #007bff;
+}
+
+/* Assignment List */
+.assignment-item {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    background-color: #ffffff;
+}
+
+/* Video */
+.video-wrapper {
+    max-width: 800px;
+    margin: auto;
+    margin-top: 2rem;
+}
+
+video {
+    width: 100%;
+    border-radius: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .navbar .btn {
+        margin-top: 0.5rem;
+    }
+}
