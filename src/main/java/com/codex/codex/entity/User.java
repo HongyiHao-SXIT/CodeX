@@ -2,14 +2,15 @@ package com.codex.codex.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class User {
 
     @Id
@@ -19,25 +20,16 @@ public class User {
     @Column(nullable = false, unique = true, length = 50)
     private String username;
 
-    @Column(nullable = false, length = 100)
-    private String password;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
-
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(name = "created_at")
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false, length = 20)
+    private String role = "STUDENT";
+
+    @Column(name = "created_at", updatable = false)
+    @org.hibernate.annotations.CreationTimestamp
     private LocalDateTime createdAt;
-
-    public enum Role {
-        STUDENT, TEACHER
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
 }
