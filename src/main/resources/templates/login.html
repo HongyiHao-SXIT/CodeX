@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login - Codex</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <title>Login</title>
 </head>
 <body>
-<div class="login-container">
-    <h2>Welcome to Codex</h2>
-    <form th:action="@{/login}" method="post" class="login-form">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" id="password" required>
-        <div class="toggle-password">
-            <input type="checkbox" id="show-password">
-            <label for="show-password">Show Password</label>
-        </div>
+<h2>Login</h2>
+<form th:action="@{/login}" method="post">
+    <div>
+        <label>Username:</label>
+        <input type="text" name="username"/>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password" name="password"/>
+    </div>
+    <div>
         <button type="submit">Login</button>
-        <p th:if="${error}" th:text="${error}" class="error-message"></p>
-    </form>
-    <p class="register-link"><a th:href="@{/register}">Register a new account</a></p>
-</div>
-<script th:src="@{/js/login.js}"></script>
+    </div>
+</form>
+<p>Don't have an account? <a th:href="@{/register}">Register</a></p>
 </body>
 </html>
