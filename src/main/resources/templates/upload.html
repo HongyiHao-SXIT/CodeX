@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>上传论文</title></head>
+<body>
+<h2>上传论文</h2>
+<form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+    标题：<input type="text" name="title"><br/>
+    作者：<input type="text" name="author"><br/>
+    摘要：<textarea name="abstractText"></textarea><br/>
+    文件：<input type="file" name="file"><br/>
+    <button type="submit">上传</button>
+</form>
+</body>
+</html>

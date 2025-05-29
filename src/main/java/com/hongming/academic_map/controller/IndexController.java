@@ -8,6 +8,6 @@ public class IndexController {
 
     @GetMapping("/index")
     public String index() {
-        return "index"; // 返回 resources/templates/index.html 页面
+        return "index";
     }
 }

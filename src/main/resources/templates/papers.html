@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>论文列表</title></head>
+<body>
+<h2>论文列表</h2>
+
+<form th:action="@{/search}" method="get">
+    关键词搜索：<input type="text" name="keyword"/>
+    <button type="submit">搜索</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>标题</th>
+        <th>作者</th>
+        <th>摘要</th>
+        <th>操作</th>
+    </tr>
+    <tr th:each="paper : ${papers}">
+        <td th:text="${paper.title}"></td>
+        <td th:text="${paper.author}"></td>
+        <td th:text="${paper.abstractText}"></td>
+        <td>
+            <a th:href="@{'/download/' + ${paper.id}}">下载</a>
+            <form th:action="@{'/request-delete/' + ${paper.id}}" method="post" style="display:inline">
+                <!-- 检查用户是否已登录 -->
+                <button type="submit" th:if="${#authorization.expression('isAuthenticated()') and #authentication.name == paper.uploader.username && !paper.deletionRequested}">
+                    请求删除
+                </button>
+                <span th:if="${paper.deletionRequested}">已请求删除</span>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

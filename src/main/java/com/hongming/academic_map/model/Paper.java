@@ -1,29 +1,30 @@
 package com.hongming.academic_map.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Table(name = "papers")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Paper {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
     private String author;
 
-    @Column(length = 2000)
+    private String filename;
+
+    private boolean deletionRequested;
+@Lob
+@Column(columnDefinition = "TEXT")
     private String abstractText;
 
-    @Column(nullable = false)
-    private String filePath;
+    @ManyToOne
+    @JoinColumn(name = "uploader_id")
+    private User uploader;
 }
