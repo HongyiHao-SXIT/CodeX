@@ -2,35 +2,44 @@ package com.hongming_academic_map.hongming_academic_map.controller;
 
 import com.hongming_academic_map.hongming_academic_map.entity.User;
 import com.hongming_academic_map.hongming_academic_map.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginForm() {
         return "login";
     }
 
     @GetMapping("/register")
-    public String registerPage(Model model) {
-        model.addAttribute("user", new User());
+    public String registerForm(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
         return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user, Model model) {
-        boolean success = userService.registerUser(user);
-        if (!success) {
-            model.addAttribute("error", "Username already exists.");
+    public String registerUser(@ModelAttribute("user") User user, Model model) {
+        User existingUser = userService.findByUsername(user.getUsername());
+        
+        if (existingUser != null) {
+            model.addAttribute("error", "Username already exists!");
             return "register";
         }
-        return "redirect:/login";
+        
+        userService.saveUser(user);
+        model.addAttribute("success", "Registration successful. Please login.");
+        return "login";
     }
-}
+}    

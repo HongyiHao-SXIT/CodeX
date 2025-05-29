@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload Paper</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h2>Upload Academic Paper</h2>
+<form method="post" enctype="multipart/form-data" th:action="@{/upload}">
+    <label>Title:</label><input type="text" name="title" required><br>
+    <label>Abstract:</label><textarea name="abstractText" required></textarea><br>
+    <label>Author:</label><input type="text" name="author" required><br>
+    <label>File:</label><input type="file" name="file" required><br>
+    <button type="submit">Upload</button>
+</form>
+<p th:text="${message}"></p>
+</body>
+</html>

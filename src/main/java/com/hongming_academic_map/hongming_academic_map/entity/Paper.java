@@ -8,29 +8,33 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@Table(name = "users")
+@Table(name = "papers")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Paper {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String username;
-
     @Column(nullable = false)
-    private String password;
+    private String title;
 
-    private String name;
-    private String email;
-    private String institution;
-    private String major;
+    @Lob
+    private String abstracts;
+
+    private String author;
+
+    @Column(name = "file_path")
+    private String filePath;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "register_time", insertable = false, updatable = false)
-    private Date registerTime;
+    @Column(name = "upload_time", insertable = false, updatable = false)
+    private Date uploadTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uploaded_by")
+    private User uploadedBy;
 }    
