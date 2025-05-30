@@ -78,7 +78,7 @@ public class PaperController {
 
         paperRepository.save(paper);
 
-        return "redirect:/papers";
+        return "redirect:/index";
     }
 
     @GetMapping("/download/{id}")
