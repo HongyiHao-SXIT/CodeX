@@ -109,4 +109,23 @@ public class PaperController {
         }
         return "redirect:/papers";
     }
+
+    @PostMapping("/delete/{id}")
+    public String deletePaper(@PathVariable Long id, @RequestParam("keyword") String keyword, Authentication auth) throws IOException {
+        Paper paper = paperRepository.findById(id).orElseThrow(() -> new FileNotFoundException("论文不存在"));
+
+        // 检查当前用户是否是上传者
+        if (paper.getUploader().getUsername().equals(auth.getName())) {
+            // 删除文件
+            String projectRoot = System.getProperty("user.dir");
+            Path filePath = Paths.get(projectRoot, uploadDir).resolve(paper.getFilename());
+            File file = filePath.toFile();
+            if (file.exists()) {
+                Files.delete(filePath);
+            }
+
+            paperRepository.delete(paper);
+        }
+        return "redirect:/search?keyword=" + keyword;
+    }
 }
