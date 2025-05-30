@@ -12,8 +12,7 @@ import java.util.List;
 public interface PaperRepository extends JpaRepository<Paper, Long> {
 
     List<Paper> findByUploaderUsername(String username);
-
-    // 使用原生 SQL 查询
+    
     @Query(value = "SELECT * FROM paper WHERE LOWER(abstract_text) LIKE LOWER(CONCAT('%', :keyword, '%'))", 
            nativeQuery = true)
     List<Paper> searchByKeyword(@Param("keyword") String keyword);

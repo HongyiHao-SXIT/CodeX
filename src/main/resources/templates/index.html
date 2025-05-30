@@ -60,6 +60,13 @@
                         </a>
                     </li>
                     <li>
+                        <a th:href="@{#contact}">
+                            <span class="rect"></span>
+                            <span class="circle"></span>
+                            Publish
+                        </a>
+                    </li>
+                    <li>
                         <a th:href="@{#video}">
                             <span class="rect"></span>
                             <span class="circle"></span>
@@ -70,25 +77,20 @@
                         <a th:href="@{#blog}">
                             <span class="rect"></span>
                             <span class="circle"></span>
-                            Blog Entires
+                            Recommendation
                         </a>
                     </li>
                     <li>
-                        <a th:href="@{#contact}">
+                        <a th:href="@{/logout}">
                             <span class="rect"></span>
                             <span class="circle"></span>
-                            Publish
+                            Logout
                         </a>
                     </li>
                 </ul>
             </nav>
             <ul class="social-icons">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                <a th:href="@{/logout}">Logout</a>
             </ul>
         </div>
 
@@ -99,9 +101,8 @@
                     <div class="image"></div>
                     <div class="info">
                         <div>
-                          <h1>Beautiful Template<br>Sentra</h1>
-                          <p>Sentra is free Bootstrap CSS Template by templatemo website.<br>
-                          	Please share our site link to your friends.</p>
+                          <h1>Carnegie Mellon University<br>Won the champion</h1>
+                          <p>The competition challenges teams to design <br>the most impenetrable system.</p>
                           <div class="white-button button">
                               <a th:href="@{#featured}">Discover More</a>
                           </div>
@@ -114,9 +115,8 @@
                         <div class="image"></div>
                         <div class="info">
                         <div>
-                          <h1>Please tell <br>your friends</h1>
-                          <p>Support templatemo by sharing a link to your friends.
-							<br>Thank you for helping us.</p>
+                          <h1>High-performance and safe <br>robot dog control theory</h1>
+                          <p>Use new training methods and algorithms to <br>make humanoid robots and quadruped robot dogs safer and faster to make decisions and move</p>
                           
                           <div class="white-button button">
                               <a th:href="@{#featured}">Share More</a>
@@ -131,8 +131,8 @@
                         <div class="image"></div>
                         <div class="info">
                         <div>
-                          <h1>Suspendisse suscipit<br>nulla sed</h1>
-                          <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices <br>posuere cubilia Curae; Sed at massa turpis.</p>
+                          <h1>A concrete inspection robot<br> based on the Yolo model</h1>
+                          <p>It is developed by China Railway 12th Bureau Science and Technology Branch and <br>Taiyuan Hongming Intelligent Technology Co., Ltd</p>
                           
                           <div class="white-button button">
                               <a th:href="@{#featured}">Learn More</a>
@@ -194,85 +194,76 @@
                         </div>
                         <div class="item">
                             <div class="image">
-                                <img th:src="@{/img/featured_2.jpg}" alt="">
+                                <img th:src="@{/img/slide_2.jpg}" alt="">
                                 <div class="featured-button button">
                                     <a th:href="@{#projects}">Continue Reading</a>
                                 </div>
                             </div>
                             <div class="text-content">
-                                <h4>In volutpat augue lectus</h4>
-                                <span>Elementum</span>
-                                <p>#4 Aliquam mollis lacus eget metus efficitur lobortis. Suspendisse libero lacus, accumsan vitae commodo tristique, luctus gravida metus.</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="image">
-                                <img th:src="@{/img/featured_1.jpg}" alt="">
-                                <div class="featured-button button">
-                                    <a th:href="@{#projects}">Continue Reading</a>
-                                </div>
-                            </div>
-                            <div class="text-content">
-                                <h4>Cras commodo odio</h4>
-                                <span>Aliquam</span>
-                                <p>#5 Mauris lacinia pretium libero, ut tincidunt lacus molestie ornare. Phasellus a facilisis erat. Praesent eleifend nibh mauris, quis sodales lorem convallis pulvinar.</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="image">
-                                <img th:src="@{/img/featured_3.jpg}" alt="">
-                                <div class="featured-button button">
-                                    <a th:href="@{#projects}">Continue Reading</a>
-                                </div>
-                            </div>
-                            <div class="text-content">
-                                <h4>Sed at massa turpis</h4>
-                                <span>Curabitur</span>
-                                <p>#6 Vestibulum tincidunt ornare ligula vel molestie. Curabitur hendrerit mauris mollis ipsum vulputate rutrum. Phasellus luctus odio eget dui imperdiet.</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="image">
-                                <img th:src="@{/img/featured_2.jpg}" alt="">
-                                <div class="featured-button button">
-                                    <a th:href="@{#projects}">Continue Reading</a>
-                                </div>
-                            </div>
-                            <div class="text-content">
-                                <h4>Aliquam mollis lacus</h4>
-                                <span>Suspendisse</span>
-                                <p>#7 Suspendisse suscipit nulla sed nisl fermentum, auctor suscipit nunc rhoncus. Proin faucibus metus diam, nec hendrerit purus pharetra in.</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="image">
-                                <img th:src="@{/img/featured_1.jpg}" alt="">
-                                <div class="featured-button button">
-                                    <a th:href="@{#projects}">Continue Reading</a>
-                                </div>
-                            </div>
-                            <div class="text-content">
-                                <h4>Mauris lacinia pretium</h4>
-                                <span>Vestibulum</span>
-                                <p>#8 Suspendisse suscipit nulla sed nisl fermentum, auctor suscipit nunc rhoncus. Proin faucibus metus diam, nec hendrerit purus pharetra in.</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="image">
-                                <img th:src="@{/img/featured_3.jpg}" alt="">
-                                <div class="featured-button button">
-                                    <a th:href="@{#projects}">Continue Reading</a>
-                                </div>
-                            </div>
-                            <div class="text-content">
-                                <h4>Proin sit amet fringilla erat</h4>
-                                <span>Convallis</span>
-                                <p>#9 Suspendisse suscipit nulla sed nisl fermentum, auctor suscipit nunc rhoncus. Proin faucibus metus diam, nec hendrerit purus pharetra in.</p>
+                                <h4>The CTFX </h4>
+                                <span>CMU</span>
+                                <p>A team of 15 students won @MITREcorp's 2025 Embedded Capture the Flag Cybersecurity Competition, CMU's fourth straight victory! 🏅</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+            <section id="contact" class="content-section">
+                <div id="contact-content">
+                    <div class="section-heading">
+                        <h1>Publish<br><em>My Paper</em></h1>
+                        <p>Thank you for choosing our platform 
+                        <br>and hope you will reach the next level in your field.</p>
+                    </div>
+
+                    <div class="section-content" style="margin-bottom: 50px;">
+                        <form th:action="@{/search}" method="get">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <input type="text" name="keyword" class="form-control" placeholder="Search paper by keyword..." required />
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary btn-block">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="section-content">
+                        <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <input type="text" name="title" class="form-control" placeholder="论文标题..." required />
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <input type="text" name="author" class="form-control" placeholder="作者..." required />
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <textarea name="abstractText" rows="6" class="form-control" placeholder="论文摘要..." required></textarea>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <input type="file" name="file" class="form-control" required />
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <button type="submit" id="form-submit" class="btn">Publish</button>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
             <section id="video" class="content-section">
                 <div class="row">
                     <div class="col-md-12">
@@ -454,48 +445,6 @@
                                 </div>
                             </section> 
                         </div>
-                    </div>
-                </div>
-            </section>
-            <section id="contact" class="content-section">
-                <div id="contact-content">
-                    <div class="section-heading">
-                        <h1>Publish<br><em>My Paper</em></h1>
-                        <p>Thank you for choosing our platform 
-                        <br>and hope you will reach the next level in your field.</p>
-                        
-                    </div>
-                    <div class="section-content">
-                        <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <fieldset>
-                                        <input type="text" name="title" class="form-control" placeholder="论文标题..." required />
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-6">
-                                    <fieldset>
-                                        <input type="text" name="author" class="form-control" placeholder="作者..." required />
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-12">
-                                    <fieldset>
-                                        <textarea name="abstractText" rows="6" class="form-control" placeholder="论文摘要..." required></textarea>
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-12">
-                                    <fieldset>
-                                        <input type="file" name="file" class="form-control" required />
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-12">
-                                    <fieldset>
-                                        <button type="submit" id="form-submit" class="btn">Publish</button>
-                                    </fieldset>
-                                </div>
-                            </div>
-                        </form>
-
                     </div>
                 </div>
             </section>

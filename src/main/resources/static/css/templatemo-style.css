@@ -1,11 +1,3 @@
-/* 
-
-Sentra Template
-
-https://templatemo.com/tm-518-sentra
-
-*/
-
 body {
   font-family: 'Open Sans', sans-serif;
 }
@@ -591,34 +583,6 @@ header {
   margin-bottom: 12.5px;
 }
 
-
-
-/* Projects Style */
-
-#projects {
-  padding-left: 60px;
-  padding-right: 60px;
-  padding-bottom: 50px;
-}
-
-#projects .masonry {
-  position: relative;
-  width: 100%;
-}
-
-#projects .masonry .item img {
-  transition: all 1s;
-  width: 100%;
-  overflow: hidden;
-  margin-bottom: 30px;
-}
-
-#projects .masonry .item img:hover {
-  opacity: 0.5;
-}
-
-
-
 /* Video Presentation Style */
 
 #video {
@@ -718,10 +682,6 @@ header {
   transition: all .6s .8s;
 }
 
-
-
-
-/* Blog Style */
 
 #blog {
   padding-left: 60px;
@@ -839,11 +799,6 @@ header {
   margin-top: 25px;
 }
 
-
-
-
-/* Contact Style */
-
 #contact {
   padding-top: 0px;
 }
@@ -908,9 +863,6 @@ header {
 }
 
 
-
-/* Footer Style */
-
 .footer {
   background-color: rgba(12,12,12,0.9);
   height: 80px;
@@ -935,9 +887,6 @@ header {
   font-weight: 600;
 }
 
-
-
-/* Responsive Style */
 
 @media (max-width: 992px) {
 
