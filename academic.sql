@@ -22,3 +22,16 @@ CREATE TABLE IF NOT EXISTS paper (
     CONSTRAINT fk_uploader FOREIGN KEY (uploader_id) REFERENCES user(id) ON DELETE SET NULL
 );
 
+ALTER TABLE paper
+ADD COLUMN abstract_text_lower VARCHAR(255) AS (LOWER(abstract_text)) VIRTUAL;
+
+CREATE INDEX idx_paper_abstract_text ON paper (abstract_text_lower);
+
+ALTER TABLE paper
+ADD COLUMN title_lower VARCHAR(255) AS (LOWER(title)) VIRTUAL;
+CREATE INDEX idx_paper_title ON paper (title_lower);
+
+ALTER TABLE paper
+ADD COLUMN author_lower VARCHAR(255) AS (LOWER(author)) VIRTUAL;
+
+CREATE INDEX idx_paper_author ON paper (author_lower);

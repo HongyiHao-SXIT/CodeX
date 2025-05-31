@@ -31,7 +31,6 @@
         <nav>
             <ul class="nav navbar-nav">
                 <li><a th:href="@{/index}">Home</a></li>
-                <li><a th:href="@{/upload}">Upload</a></li>
                 <li><a th:href="@{/logout}">Logout</a></li>
             </ul>
         </nav>
@@ -79,30 +78,18 @@
                         <th>Title</th>
                         <th>Abstract</th>
                         <th>Author</th>
-                        <th>Download</th>
-                        <th>Request Deletion</th>
-                        <th>Delete</th>
+                        <th>Learn More</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="paper : ${papers}">
-                        <td th:text="${paper.title}">Paper Title</td>
-                        <td th:text="${paper.abstractText}">Abstract</td>
+                        <td>
+                            <a th:href="@{'/paper/detail/' + ${paper.id}}" th:text="${paper.title}">Paper Title</a>
+                        </td>
                         <td th:text="${paper.author}">Author</td>
+                        <td th:text="${paper.abstractText}">Abstract</td>
                         <td>
-                            <a th:href="@{'/download/' + ${paper.id}}" class="btn btn-sm btn-primary">Download</a>
-                        </td>
-                        <td>
-                            <form th:action="@{/request-delete/{id}(id=${paper.id})}" method="post" th:if="${!paper.deletionRequested}">
-                                <button type="submit" class="btn btn-sm btn-warning">Request</button>
-                            </form>
-                            <span th:if="${paper.deletionRequested}" class="text-danger">Requested</span>
-                        </td>
-                        <td>
-                            <form th:action="@{/delete/{id}(id=${paper.id})}" method="post">
-                                <input type="hidden" name="keyword" th:value="${param.keyword[0]}"/>
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                            </form>
+                            <a th:href="@{'/paper/detail/' + ${paper.id}}" class="btn btn-sm btn-info">Learn More</a>
                         </td>
                     </tr>
                 </tbody>

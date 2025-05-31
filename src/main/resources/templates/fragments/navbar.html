@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!-- 响应式导航栏 -->
+    <header class="nav-down responsive-nav hidden-lg hidden-md">
+        <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div id="main-nav" class="collapse navbar-collapse">
+            <nav>
+                <ul class="nav navbar-nav">
+                    <li><a th:href="@{#top}">Home</a></li>
+                    <li><a th:href="@{#featured}">Featured</a></li>
+                    <li><a th:href="@{#video}">Presentation</a></li>
+                    <li><a th:href="@{#blog}">Blog Entries</a></li>
+                    <li><a th:href="@{#contact}">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 侧边栏导航栏 -->
+    <div class="sidebar-navigation hidden-sm hidden-xs">
+        <div class="logo">
+            <a href="#">HongMing<em>Academic Map</em></a>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{#top}">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{#featured}">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        News
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{#contact}">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        Publish
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{#video}">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        Presentation
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{#blog}">
+                        <span class="rect"></span>
+                        <span class="circle"></span>
+                        Recommendation
+                    </a>
+                </li>
+                <li>
+                    <form th:action="@{/logout}" method="post" style="display:inline;">
+                        <button type="submit"
+                                class="btn btn-link"
+                                style="color: white; padding: 0; border: none; background: none; text-decoration: none;">
+                            <span class="rect"></span>
+                            <span class="circle"></span>
+                            Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+        <ul class="social-icons">
+            <li><a th:href="@{https://x.com/Lanyi_adict1145}"><i class="fa fa-twitter"></i></a></li>
+        </ul>
+    </div>
+</body>
+</html>
