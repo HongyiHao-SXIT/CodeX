@@ -1,29 +1,41 @@
 package com.hongming.academic_map.service;
 
-import com.hongming.academic_map.model.User;
+import com.hongming.academic_map.dto.RegisterDto;
+import com.hongming.academic_map.entity.User;
 import com.hongming.academic_map.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.*;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-
 @Service
-@RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    private final UserRepository userRepo;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        User user = userRepo.findByUsername(username);
-        if (user == null) throw new UsernameNotFoundException("User not found");
-
-        return new org.springframework.security.core.userdetails.User(
-            user.getUsername(),
-            user.getPassword(),
-            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
-        );
+    public User register(RegisterDto registerDto) {
+        if (userRepository.existsByUsername(registerDto.getUsername())) {
+            throw new RuntimeException("Username already exists");
+        }
+        
+        if (userRepository.existsByEmail(registerDto.getEmail())) {
+            throw new RuntimeException("Email already exists");
+        }
+        
+        if (!registerDto.getPassword().equals(registerDto.getConfirmPassword())) {
+            throw new RuntimeException("Passwords do not match");
+        }
+        
+        User user = new User();
+        user.setUsername(registerDto.getUsername());
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setEmail(registerDto.getEmail());
+        user.setFirstName(registerDto.getFirstName());
+        user.setLastName(registerDto.getLastName());
+        
+        return userRepository.save(user);
     }
 }
