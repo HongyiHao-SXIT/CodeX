@@ -33,7 +33,7 @@ public class SearchService {
         result.setSearchTime(searchTime);
         result.setCurrentPage(page);
         result.setTotalPages(paperPage.getTotalPages());
-        result.setSortOption("相关度");
+        result.setSortOption("Relevance");
         
         return result;
     }
@@ -41,17 +41,20 @@ public class SearchService {
     public SearchResultDto advancedSearch(String query, String author, Integer year, String type, int page, int size) {
         long startTime = System.currentTimeMillis();
         
-        List<Paper> results = paperRepository.advancedSearch(author, year, type);
+        Pageable pageable = PageRequest.of(page - 1, size);
+
+        Page<Paper> paperPage = paperRepository.advancedSearch(author, year, type, pageable);
+        
         double searchTime = (System.currentTimeMillis() - startTime) / 1000.0;
         
         SearchResultDto result = new SearchResultDto();
         result.setQuery(query);
-        result.setResults(results);
-        result.setTotalResults(results.size());
+        result.setResults(paperPage.getContent());
+        result.setTotalResults(paperPage.getTotalElements());
         result.setSearchTime(searchTime);
-        result.setCurrentPage(1);
-        result.setTotalPages(1);
-        result.setSortOption("相关度");
+        result.setCurrentPage(page);
+        result.setTotalPages(paperPage.getTotalPages());
+        result.setSortOption("Relevance");
         
         return result;
     }

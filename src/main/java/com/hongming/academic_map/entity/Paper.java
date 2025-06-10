@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Paper {
     @Id
-    private String id; // DOI or other unique identifier
+    private Long id;
     
     private String title;
     private String abstractText;

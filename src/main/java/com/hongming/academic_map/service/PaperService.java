@@ -28,17 +28,14 @@ public class PaperService {
         PaperDto paperDto = new PaperDto();
         paperDto.setPaper(paper);
         
-        // Check if current user has saved this paper
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             User user = (User) authentication.getPrincipal();
             paperDto.setSaved(userPaperSaveRepository.existsByUserAndPaperId(user, paperId));
         }
         
-        // Get related papers (simplified - in real app would use more sophisticated algorithm)
         paperDto.setRelatedPapers(paperRepository.findTop5ByJournalOrderByCitationsDesc(paper.getJournal()));
-        
-        // Generate citation formats
+
         paperDto.setApaCitation(generateApaCitation(paper));
         paperDto.setMlaCitation(generateMlaCitation(paper));
         paperDto.setChicagoCitation(generateChicagoCitation(paper));
@@ -67,7 +64,7 @@ public class PaperService {
     }
 
     private String generateApaCitation(Paper paper) {
-        // Simplified APA citation format
+
         return String.format("%s (%d). %s. %s, %s.", 
             String.join(", ", paper.getAuthors()), 
             paper.getYear(),
@@ -77,7 +74,6 @@ public class PaperService {
     }
 
     private String generateMlaCitation(Paper paper) {
-        // Simplified MLA citation format
         return String.format("%s. \"%s.\" %s, vol. %s, no. %s, %d, pp. %s.", 
             String.join(", ", paper.getAuthors()),
             paper.getTitle(),
@@ -89,7 +85,6 @@ public class PaperService {
     }
 
     private String generateChicagoCitation(Paper paper) {
-        // Simplified Chicago citation format
         return String.format("%s. \"%s.\" %s %s, no. %s (%d): %s.", 
             String.join(", ", paper.getAuthors()),
             paper.getTitle(),

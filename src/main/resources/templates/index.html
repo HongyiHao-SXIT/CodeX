@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学术搜索 - 探索知识的海洋</title>
+    <title>Academic Search - Explore the Ocean of Knowledge</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
-    <!-- 导航栏 -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <i class="bi bi-search-heart"></i> 学术搜索
+                <i class="bi bi-search-heart"></i> Academic Search
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -21,30 +20,27 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">首页</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/advanced">高级搜索</a>
+                        <a class="nav-link" href="/advanced">Advanced Search</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">关于我们</a>
+                        <a class="nav-link" href="/about">About Us</a>
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <a href="/login" class="btn btn-outline-primary me-2">登录</a>
-                    <a href="/register" class="btn btn-primary">注册</a>
+                    <a href="/login" class="btn btn-outline-primary me-2">Login</a>
+                    <a href="/register" class="btn btn-primary">Register</a>
                 </div>
             </div>
         </div>
     </nav>
-
-    <!-- 主要内容区 -->
     <main class="main-container">
         <div class="container">
-            <!-- 搜索区域 -->
             <div class="card border-0 shadow-lg mb-5">
                 <div class="card-body p-5 bg-primary text-white rounded">
-                    <h1 class="text-center mb-4">探索学术世界的无限可能</h1>
+                    <h1 class="text-center mb-4">Explore the Infinite Possibilities of the Academic World</h1>
                     <form th:action="@{/search}" method="get" class="mb-3">
                         <div class="row justify-content-center">
                             <div class="col-md-8">
@@ -52,30 +48,28 @@
                                     <input type="text" 
                                            name="q" 
                                            class="form-control form-control-lg" 
-                                           placeholder="输入关键词、标题、作者或DOI..." 
+                                           placeholder="Enter keywords, title, author, or DOI..." 
                                            required
                                            id="searchInput">
                                     <button type="submit" class="btn btn-accent btn-lg">
-                                        <i class="bi bi-search"></i> 搜索
+                                        <i class="bi bi-search"></i> Search
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="text-center mt-3">
-                            <a href="/advanced" class="text-white">高级搜索选项</a>
+                            <a href="/advanced" class="text-white">Advanced Search Options</a>
                         </div>
                     </form>
                 </div>
             </div>
-
-            <!-- 特色功能 -->
             <div class="row mb-5">
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         <div class="card-body text-center">
                             <i class="bi bi-journal-text fs-1 text-primary mb-3"></i>
-                            <h4>海量文献</h4>
-                            <p>收录超过1亿篇学术论文、期刊文章和会议论文，涵盖各个学科领域。</p>
+                            <h4>Massive Literature</h4>
+                            <p>Contains over 100 million academic papers, journal articles, and conference papers, covering various disciplines.</p>
                         </div>
                     </div>
                 </div>
@@ -83,8 +77,8 @@
                     <div class="card h-100">
                         <div class="card-body text-center">
                             <i class="bi bi-funnel fs-1 text-primary mb-3"></i>
-                            <h4>精准筛选</h4>
-                            <p>通过高级搜索选项，按年份、作者、期刊、引用次数等条件精确查找文献。</p>
+                            <h4>Precise Filtering</h4>
+                            <p>Use advanced search options to accurately find literature by year, author, journal, citation count, etc.</p>
                         </div>
                     </div>
                 </div>
@@ -92,27 +86,25 @@
                     <div class="card h-100">
                         <div class="card-body text-center">
                             <i class="bi bi-bookmark-star fs-1 text-primary mb-3"></i>
-                            <h4>个人收藏</h4>
-                            <p>登录后可以收藏重要文献，创建个人文献库，随时随地访问。</p>
+                            <h4>Personal Collection</h4>
+                            <p>After logging in, you can collect important literature, create a personal literature library, and access it anytime, anywhere.</p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- 热门搜索 -->
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <div class="card">
                         <div class="card-header">
-                            <i class="bi bi-fire text-accent"></i> 热门搜索
+                            <i class="bi bi-fire text-accent"></i> Hot Searches
                         </div>
                         <div class="card-body">
                             <ul class="list-unstyled">
-                                <li class="py-2 border-bottom"><a href="/search?q=人工智能" class="text-decoration-none">人工智能</a></li>
-                                <li class="py-2 border-bottom"><a href="/search?q=区块链" class="text-decoration-none">区块链技术</a></li>
-                                <li class="py-2 border-bottom"><a href="/search?q=COVID-19" class="text-decoration-none">COVID-19研究</a></li>
-                                <li class="py-2 border-bottom"><a href="/search?q=可再生能源" class="text-decoration-none">可再生能源</a></li>
-                                <li class="py-2"><a href="/search?q=基因编辑" class="text-decoration-none">基因编辑技术</a></li>
+                                <li class="py-2 border-bottom"><a href="/search?q=Artificial Intelligence" class="text-decoration-none">Artificial Intelligence</a></li>
+                                <li class="py-2 border-bottom"><a href="/search?q=Blockchain Technology" class="text-decoration-none">Blockchain Technology</a></li>
+                                <li class="py-2 border-bottom"><a href="/search?q=COVID-19 Research" class="text-decoration-none">COVID-19 Research</a></li>
+                                <li class="py-2 border-bottom"><a href="/search?q=Renewable Energy" class="text-decoration-none">Renewable Energy</a></li>
+                                <li class="py-2"><a href="/search?q=Gene Editing Technology" class="text-decoration-none">Gene Editing Technology</a></li>
                             </ul>
                         </div>
                     </div>
@@ -120,20 +112,20 @@
                 <div class="col-md-6 mb-4">
                     <div class="card">
                         <div class="card-header">
-                            <i class="bi bi-megaphone text-accent"></i> 最新公告
+                            <i class="bi bi-megaphone text-accent"></i> Latest Announcements
                         </div>
                         <div class="card-body">
                             <div class="alert alert-info mb-3">
                                 <small>2023-06-15</small>
-                                <p class="mb-0">系统新增了IEEE Xplore数据库的文献收录。</p>
+                                <p class="mb-0">The system has added literature from the IEEE Xplore database.</p>
                             </div>
                             <div class="alert alert-success mb-3">
                                 <small>2023-06-10</small>
-                                <p class="mb-0">高级搜索功能已上线，支持更多筛选条件。</p>
+                                <p class="mb-0">The advanced search function is now available, supporting more filtering conditions.</p>
                             </div>
                             <div class="alert alert-warning mb-0">
                                 <small>2023-06-05</small>
-                                <p class="mb-0">服务器将于6月20日凌晨2:00-4:00进行维护。</p>
+                                <p class="mb-0">The server will be maintained from 2:00 - 4:00 am on June 20th.</p>
                             </div>
                         </div>
                     </div>
@@ -141,50 +133,47 @@
             </div>
         </div>
     </main>
-
-    <!-- 页脚 -->
     <footer class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4">
-                    <h5>关于学术搜索</h5>
-                    <p class="text-muted">一个开放、免费的学术文献搜索平台，致力于为研究人员和学生提供便捷的文献检索服务。</p>
+                    <h5>About Academic Search</h5>
+                    <p class="text-muted">An open and free academic literature search platform dedicated to providing convenient literature retrieval services for researchers and students.</p>
                 </div>
                 <div class="col-md-2 mb-4">
-                    <h5>快速链接</h5>
+                    <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="/about" class="footer-link">关于我们</a></li>
-                        <li class="mb-2"><a href="/contact" class="footer-link">联系我们</a></li>
-                        <li class="mb-2"><a href="/privacy" class="footer-link">隐私政策</a></li>
-                        <li><a href="/terms" class="footer-link">使用条款</a></li>
+                        <li class="mb-2"><a href="/about" class="footer-link">About Us</a></li>
+                        <li class="mb-2"><a href="/contact" class="footer-link">Contact Us</a></li>
+                        <li class="mb-2"><a href="/privacy" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="/terms" class="footer-link">Terms of Use</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4">
-                    <h5>合作伙伴</h5>
+                    <h5>Partners</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="footer-link">中国知网</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">CNKI</a></li>
                         <li class="mb-2"><a href="#" class="footer-link">IEEE Xplore</a></li>
                         <li class="mb-2"><a href="#" class="footer-link">Springer</a></li>
                         <li><a href="#" class="footer-link">ScienceDirect</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4">
-                    <h5>关注我们</h5>
+                    <h5>Follow Us</h5>
                     <div class="d-flex">
                         <a href="#" class="text-white me-3"><i class="bi bi-wechat fs-4"></i></a>
                         <a href="#" class="text-white me-3"><i class="bi bi-weibo fs-4"></i></a>
                         <a href="#" class="text-white"><i class="bi bi-github fs-4"></i></a>
                     </div>
-                    <p class="text-muted mt-3">邮箱: contact@academicsearch.edu</p>
+                    <p class="text-muted mt-3">Email: contact@academicsearch.edu</p>
                 </div>
             </div>
             <hr class="my-4 bg-light">
             <div class="text-center">
-                <p class="mb-0">© 2023 学术搜索 - 版权所有</p>
+                <p class="mb-0">© 2023 Academic Search - All rights reserved</p>
             </div>
         </div>
     </footer>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/js/main.js}"></script>
     <script th:src="@{/js/search.js}"></script>

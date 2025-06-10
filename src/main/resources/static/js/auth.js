@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 密码强度检测
     const passwordInput = document.getElementById('password');
     if (passwordInput) {
         const strengthBar = document.getElementById('passwordStrength');
@@ -25,8 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
-    // 注册表单验证
+
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         registerForm.addEventListener('submit', function(e) {
@@ -35,14 +33,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (password && confirmPassword && password !== confirmPassword) {
                 e.preventDefault();
-                alert('两次输入的密码不一致');
+                alert('Passwords do not match');
                 return false;
             }
             
             const agreeTerms = document.getElementById('agreeTerms');
             if (agreeTerms && !agreeTerms.checked) {
                 e.preventDefault();
-                alert('请同意服务条款和隐私政策');
+                alert('Please agree to the Terms of Service and Privacy Policy');
                 return false;
             }
             
