@@ -1,508 +1,192 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Sentra - Free Bootstrap Theme</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" th:href="@{/apple-touch-icon.png}">
-    
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
-    <link rel="stylesheet" th:href="@{/css/fontAwesome.css}">
-    <link rel="stylesheet" th:href="@{/css/light-box.css}">
-    <link rel="stylesheet" th:href="@{/css/owl-carousel.css}">
-    <link rel="stylesheet" th:href="@{/css/templatemo-style.css}">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    
-    <script th:src="@{/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学术搜索 - 探索知识的海洋</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
-        <header class="nav-down responsive-nav hidden-lg hidden-md">
-            <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-search-heart"></i> 学术搜索
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div id="main-nav" class="collapse navbar-collapse">
-                <nav>
-                    <ul class="nav navbar-nav">
-                        <li><a th:href="@{#top}">Home</a></li>
-                        <li><a th:href="@{#featured}">Featured</a></li>
-                        <li><a th:href="@{#video}">Presentation</a></li>
-                        <li><a th:href="@{#blog}">Blog Entries</a></li>
-                        <li><a th:href="@{#contact}">Contact Us</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-
-        <div class="sidebar-navigation hidde-sm hidden-xs">
-            <div class="logo">
-                <a href="#">HongMing<em>Academic Map</em></a>
-            </div>
-            <nav>
-                <ul>
-                    <li>
-                        <a th:href="@{#top}">
-                            <span class="rect"></span>
-                            <span class="circle"></span>
-                            Home
-                        </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">首页</a>
                     </li>
-                    <li>
-                        <a th:href="@{#featured}">
-                            <span class="rect"></span>
-                            <span class="circle"></span>
-                            News
-                        </a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/advanced">高级搜索</a>
                     </li>
-                    <li>
-                        <a th:href="@{#contact}">
-                            <span class="rect"></span>
-                            <span class="circle"></span>
-                            Publish
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{#video}">
-                            <span class="rect"></span>
-                            <span class="circle"></span>
-                            Presentation
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{#blog}">
-                            <span class="rect"></span>
-                            <span class="circle"></span>
-                            Recommendation
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/logout}">
-                            <span class="rect"></span>
-                            <span class="circle"></span>
-                            Logout
-                        </a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">关于我们</a>
                     </li>
                 </ul>
-            </nav>
-            <ul class="social-icons">
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-            </ul>
+                <div class="d-flex">
+                    <a href="/login" class="btn btn-outline-primary me-2">登录</a>
+                    <a href="/register" class="btn btn-primary">注册</a>
+                </div>
+            </div>
         </div>
+    </nav>
 
-        <div class="slider">
-            <div class="Modern-Slider content-section" id="top">
-                <div class="item item-1">
-                    <div class="img-fill">
-                    <div class="image"></div>
-                    <div class="info">
-                        <div>
-                          <h1>Carnegie Mellon University<br>Won the champion</h1>
-                          <p>The competition challenges teams to design <br>the most impenetrable system.</p>
-                          <div class="white-button button">
-                              <a th:href="@{#featured}">Discover More</a>
-                          </div>
+    <!-- 主要内容区 -->
+    <main class="main-container">
+        <div class="container">
+            <!-- 搜索区域 -->
+            <div class="card border-0 shadow-lg mb-5">
+                <div class="card-body p-5 bg-primary text-white rounded">
+                    <h1 class="text-center mb-4">探索学术世界的无限可能</h1>
+                    <form th:action="@{/search}" method="get" class="mb-3">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" 
+                                           name="q" 
+                                           class="form-control form-control-lg" 
+                                           placeholder="输入关键词、标题、作者或DOI..." 
+                                           required
+                                           id="searchInput">
+                                    <button type="submit" class="btn btn-accent btn-lg">
+                                        <i class="bi bi-search"></i> 搜索
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+                        <div class="text-center mt-3">
+                            <a href="/advanced" class="text-white">高级搜索选项</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 特色功能 -->
+            <div class="row mb-5">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-journal-text fs-1 text-primary mb-3"></i>
+                            <h4>海量文献</h4>
+                            <p>收录超过1亿篇学术论文、期刊文章和会议论文，涵盖各个学科领域。</p>
                         </div>
                     </div>
                 </div>
-                <div class="item item-2">
-                    <div class="img-fill">
-                        <div class="image"></div>
-                        <div class="info">
-                        <div>
-                          <h1>High-performance and safe <br>robot dog control theory</h1>
-                          <p>Use new training methods and algorithms to <br>make humanoid robots and quadruped robot dogs safer and faster to make decisions and move</p>
-                          
-                          <div class="white-button button">
-                              <a th:href="@{#featured}">Share More</a>
-                          </div>
-                        </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-funnel fs-1 text-primary mb-3"></i>
+                            <h4>精准筛选</h4>
+                            <p>通过高级搜索选项，按年份、作者、期刊、引用次数等条件精确查找文献。</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="item item-3">
-                    <div class="img-fill">
-                        <div class="image"></div>
-                        <div class="info">
-                        <div>
-                          <h1>A concrete inspection robot<br> based on the Yolo model</h1>
-                          <p>It is developed by China Railway 12th Bureau Science and Technology Branch and <br>Taiyuan Hongming Intelligent Technology Co., Ltd</p>
-                          
-                          <div class="white-button button">
-                              <a th:href="@{#featured}">Learn More</a>
-                          </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-bookmark-star fs-1 text-primary mb-3"></i>
+                            <h4>个人收藏</h4>
+                            <p>登录后可以收藏重要文献，创建个人文献库，随时随地访问。</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 热门搜索 -->
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="bi bi-fire text-accent"></i> 热门搜索
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="py-2 border-bottom"><a href="/search?q=人工智能" class="text-decoration-none">人工智能</a></li>
+                                <li class="py-2 border-bottom"><a href="/search?q=区块链" class="text-decoration-none">区块链技术</a></li>
+                                <li class="py-2 border-bottom"><a href="/search?q=COVID-19" class="text-decoration-none">COVID-19研究</a></li>
+                                <li class="py-2 border-bottom"><a href="/search?q=可再生能源" class="text-decoration-none">可再生能源</a></li>
+                                <li class="py-2"><a href="/search?q=基因编辑" class="text-decoration-none">基因编辑技术</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="bi bi-megaphone text-accent"></i> 最新公告
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-info mb-3">
+                                <small>2023-06-15</small>
+                                <p class="mb-0">系统新增了IEEE Xplore数据库的文献收录。</p>
+                            </div>
+                            <div class="alert alert-success mb-3">
+                                <small>2023-06-10</small>
+                                <p class="mb-0">高级搜索功能已上线，支持更多筛选条件。</p>
+                            </div>
+                            <div class="alert alert-warning mb-0">
+                                <small>2023-06-05</small>
+                                <p class="mb-0">服务器将于6月20日凌晨2:00-4:00进行维护。</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </main>
 
-        <div class="page-content">
-            <section id="featured" class="content-section">
-                <div class="section-heading">
-                    <h1>Academic<br><em>News</em></h1>
-                    <p>About new technologies and discoveries that are 
-                    <br>changing the world.</p>
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>关于学术搜索</h5>
+                    <p class="text-muted">一个开放、免费的学术文献搜索平台，致力于为研究人员和学生提供便捷的文献检索服务。</p>
                 </div>
-                <div class="section-content">
-                    <div class="owl-carousel owl-theme">
-                        <div class="item">
-                            <div class="image">
-                                <img th:src="@{/img/asap.jpg}" alt="">
-                                <div class="featured-button button">
-                                    <a th:href="@{https://arxiv.org/abs/2502.01143}">Continue Reading</a>
-                                </div>
-                            </div>
-                            <div class="text-content">
-                                <h4>ASAP</h4>
-                                <span>Tairan He</span>
-                                <p>Aligning Simulation and Real-World Physics for Learning Agile Humanoid Whole-Body Skills.</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="image">
-                                <img th:src="@{\img\R-C.jpg}" alt="">
-                                <div class="featured-button button">
-                                    <a th:href="@{https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9993805}">Continue Reading</a>
-                                </div>
-                            </div>
-                            <div class="text-content">
-                                <h4>Web3-Based Decentralized Autonomous Organizations and Operations: Architectures, Models, and Mechanisms</h4>
-                                <span>Sangtian Guan</span>
-                                <p>Empowered by blockchain and Web3 technologies, decentralized autonomous organizations (DAOs) are able to rede fine resources, production relations, and organizational structures in a revolutionary manner. </p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="image">
-                                <img th:src="@{/img/dog.png}" alt="">
-                                <div class="featured-button button">
-                                    <a th:href="@{https://agile-but-safe.github.io/ }">Continue Reading</a>
-                                </div>
-                            </div>
-                            <div class="text-content">
-                                <h4>Probabilistic Safeguard for Reinforcement Learning Using Safety Index Guided Gaussian Process Models</h4>
-                                <span>Tairan He</span>
-                                <p>Safety is one of the biggest concerns to applying reinforcement learning (RL) to the physical world. In its core part, it is challenging to ensure RL agents persistently satisfy a hard state constraint without white-box or black-box dynamics models. </p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="image">
-                                <img th:src="@{/img/slide_2.jpg}" alt="">
-                                <div class="featured-button button">
-                                    <a th:href="@{#projects}">Continue Reading</a>
-                                </div>
-                            </div>
-                            <div class="text-content">
-                                <h4>The CTFX </h4>
-                                <span>CMU</span>
-                                <p>A team of 15 students won @MITREcorp's 2025 Embedded Capture the Flag Cybersecurity Competition, CMU's fourth straight victory! 🏅</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-2 mb-4">
+                    <h5>快速链接</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/about" class="footer-link">关于我们</a></li>
+                        <li class="mb-2"><a href="/contact" class="footer-link">联系我们</a></li>
+                        <li class="mb-2"><a href="/privacy" class="footer-link">隐私政策</a></li>
+                        <li><a href="/terms" class="footer-link">使用条款</a></li>
+                    </ul>
                 </div>
-            </section>
-
-            <section id="contact" class="content-section">
-                <div id="contact-content">
-                    <div class="section-heading">
-                        <h1>Publish<br><em>My Paper</em></h1>
-                        <p>Thank you for choosing our platform 
-                        <br>and hope you will reach the next level in your field.</p>
-                    </div>
-
-                    <div class="section-content" style="margin-bottom: 50px;">
-                        <form th:action="@{/search}" method="get">
-                            <div class="row">
-                                <div class="col-md-10">
-                                    <input type="text" name="keyword" class="form-control" placeholder="Search paper by keyword..." required />
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary btn-block">Search</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="section-content">
-                        <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <fieldset>
-                                        <input type="text" name="title" class="form-control" placeholder="论文标题..." required />
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-6">
-                                    <fieldset>
-                                        <input type="text" name="author" class="form-control" placeholder="作者..." required />
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-12">
-                                    <fieldset>
-                                        <textarea name="abstractText" rows="6" class="form-control" placeholder="论文摘要..." required></textarea>
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-12">
-                                    <fieldset>
-                                        <input type="file" name="file" class="form-control" required />
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-12">
-                                    <fieldset>
-                                        <button type="submit" id="form-submit" class="btn">Publish</button>
-                                    </fieldset>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                <div class="col-md-3 mb-4">
+                    <h5>合作伙伴</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="footer-link">中国知网</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">IEEE Xplore</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Springer</a></li>
+                        <li><a href="#" class="footer-link">ScienceDirect</a></li>
+                    </ul>
                 </div>
-            </section>
-
-            <section id="video" class="content-section">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="section-heading">
-                            <h1>This is a <em>company</em> presentation.</h1>
-                            <p>Praesent pellentesque efficitur magna, sed pellentesque neque malesuada vitae.</p>
-                        </div>
-                        <div class="text-content">
-                            <p>In eget ipsum sed lorem vehicula luctus. Curabitur non dolor rhoncus, hendrerit justo sit amet, vestibulum turpis. Pellentesque id auctor tellus, vel ultricies augue. Duis condimentum aliquet blandit. Fusce rhoncus et eros ut pharetra. Phasellus convallis ultricies ligula ac gravida.</p>
-                        </div>
-                        <div class="accent-button button">
-                            <a th:href="@{#blog}">Continue Reading</a>
-                        </div>
+                <div class="col-md-3 mb-4">
+                    <h5>关注我们</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-white me-3"><i class="bi bi-wechat fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-weibo fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-github fs-4"></i></a>
                     </div>
-                    <div class="col-md-12">
-                        <div class="box-video">
-                            <div class="bg-video" style="background-image: url(img/lecar.png);">
-                                <div class="bt-play">Play</div>
-                            </div>
-                            <div class="video-container">
-                                <iframe width="100%" height="520" src="https://www.bilibili.com/video/BV1GhPCejEfG/?spm_id_from=333.337.search-card.all.click&vd_source=652b5d9a45265b88bdee4cc7e3d6094f" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="text-muted mt-3">邮箱: contact@academicsearch.edu</p>
                 </div>
-            </section>
-            <section id="blog" class="content-section">
-                <div class="section-heading">
-                    <h1>Blog<br><em>Entries</em></h1>
-                    <p>Curabitur hendrerit mauris mollis ipsum vulputate rutrum. 
-                    <br>Phasellus luctus odio eget dui imperdiet.</p>
-                </div>
-                <div class="section-content">
-                    <div class="tabs-content">
-                        <div class="wrapper">
-                            <ul class="tabs clearfix" data-tabgroup="first-tab-group">
-                              <li><a href="#tab1" class="active">Scholar</a></li>
-                              <li><a href="#tab2">Periodical</a></li>
-                              <li><a href="#tab3">Conferences</a></li>
-                            </ul>
-                            <section id="first-tab-group" class="tabgroup">
-                                <div id="tab1">
-                                    <ul>
-                                        <li>
-                                            <div class="item">
-                                                <img th:src="@{/img/sangtianguan.jpg}" alt="">
-                                                <div class="text-content">
-                                                    <h4>Sangtian Guan</h4>
-                                                    <span>Ph.D Macau University of Science and Techonology</span>
-                                                    <p>He is currently a Ph.D. candidate at the Interdisciplinary College of Macau University of Science and Technology, focusing on decentralization and parallel intelligence.</p>
-                                                    
-                                                    <div class="accent-button button">
-                                                        <a th:href="@{https://scholar.google.com.hk/citations?hl=zh-CN&user=D-zI1yMAAAAJ}">Learn More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img th:src="@{/img/tairan&h1_crop.JPG}" alt="">
-                                                <div class="text-content">
-                                                    <h4>Tairan He</h4>
-                                                    <span>Robotic PhD in CMU</span>
-                                                    <p>Tairan He is second-year Ph.D. student at the Robotics Institute at Carnegie Mellon University, advised by Guanya Shi and Changliu Liu. </p>
-                                                    
-                                                    <div class="accent-button button">
-                                                        <a th:href="@{https://tairanhe.com/}">Learn More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img th:src="@{/img/HongyiHao_White.jpg}" alt="">
-                                                <div class="text-content">
-                                                    <h4>Hongyi Hao</h4>
-                                                    <span>Computer Science SXIT</span>
-                                                    <p>A student who is major in computer science and robotic. Want to learn more about machine learning and deep learning.</p>
-                                                    
-                                                    <div class="accent-button button">
-                                                        <a th:href="@{https://hongyihao-sxit.github.io/HongyiHao.github.io/}">Learn More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div id="tab2">
-                                    <ul>
-                                        <li>
-                                            <div class="item">
-                                                <img th:src="@{/img/nature.png}" alt="">
-                                                <div class="text-content">
-                                                    <h4>Nature</h4>
-                                                    <span>A comprehensive scientific journal</span>
-                                                    <p>As one of the world's oldest and most authoritative scientific journals, publishing papers in Nature is the pursuit of many scientific researchers, which fully reflects the high innovation and importance of their research results.</p>
-                                                    
-                                                    <div class="accent-button button">
-                                                        <a th:href="@{#https://www.nature.com/}">Learn More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img th:src="@{/img/science.jpg}" alt="">
-                                                <div class="text-content">
-                                                    <h4>Science</h4>
-                                                    <span>A comprehensive scientific journal</span>
-                                                    <p>One of the most prestigious journals in the scientific community, the research it publishes often has a broad impact on the entire field of science.</p>
-                                                    
-                                                    <div class="accent-button button">
-                                                        <a th:href="@{https://www.science.org/}">Learn More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img th:src="@{/img/cell.png}" alt="">
-                                                <div class="text-content">
-                                                    <h4>Cell</h4>
-                                                    <span>Focus on the life sciences sector</span>
-                                                    <p>It is one of the top journals in the life sciences and publishes research that often represents the cutting edge of the field.</p>
-                                                    
-                                                    <div class="accent-button button">
-                                                        <a th:href="@{https://www.cell.com/}">Learn More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div id="tab3">
-                                    <ul>
-                                        <li>
-                                            <div class="item">
-                                                <img th:src="@{/img/ICCV.jpg}" alt="">
-                                                <div class="text-content">
-                                                    <h4>IEEE International Conference on Computer Vision (ICCV)</h4>
-                                                    <span>Computer vision, artificial intelligence</span>
-                                                    <p>One of the top academic conferences in the field of computer vision, held every two years. ICCV brings together cutting-edge research from around the world, including image recognition, object detection, deep learning, and more.</p>
-                                                    
-                                                    <div class="accent-button button">
-                                                        <a th:href="@{https://iccv2023.thecvf.com/}">Learn More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img th:src="@{/img/NeurIPS_logo.png}" alt="">
-                                                <div class="text-content">
-                                                    <h4>Neural Information Processing Systems (NeurIPS)</h4>
-                                                    <span>Machine learning, artificial intelligence, neural networks</span>
-                                                    <p>The premier conference in the field of machine learning and artificial intelligence, attracting tens of thousands of academics and industry participants every year. The conference covers many directions such as theory, algorithm, and application, and its influence has continued to expand in recent years.</p>
-                                                    
-                                                    <div class="accent-button button">
-                                                        <a th:href="@{https://neurips.cc/}">Learn More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <img th:src="@{/img/kdd.jpg}" alt="">
-                                                <div class="text-content">
-                                                    <h4>ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)</h4>
-                                                    <span>Data mining, big data, artificial intelligence</span>
-                                                    <p>The flagship conference in the field of data mining, focusing on discovering knowledge and patterns from massive amounts of data. The conference covers algorithms, theory, applications and industrial practice.</p>
-                                                    
-                                                    <div class="accent-button button">
-                                                        <a th:href="@{https://kdd2025.kdd.org/}">Learn More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </section> 
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="footer">
-                <p>Copyright &copy; 2025 HongMing Technology 
-                
-                . Design: TemplateMo</p>
-            </section>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center">
+                <p class="mb-0">© 2023 学术搜索 - 版权所有</p>
+            </div>
         </div>
+    </footer>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
-    <script th:src="@{/js/vendor/bootstrap.min.js}"></script>
-    <script th:src="@{/js/plugins.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/js/main.js}"></script>
-
-    <script>
-        var didScroll;
-        var lastScrollTop = 0;
-        var delta = 5;
-        var navbarHeight = $('header').outerHeight();
-
-        $(window).scroll(function(event){
-            didScroll = true;
-        });
-
-        setInterval(function() {
-            if (didScroll) {
-                hasScrolled();
-                didScroll = false;
-            }
-        }, 250);
-
-        function hasScrolled() {
-            var st = $(this).scrollTop();
-            
-            // Make sure they scroll more than delta
-            if(Math.abs(lastScrollTop - st) <= delta)
-                return;
-            
-            // If they scrolled down and are past the navbar, add class .nav-up.
-            // This is necessary so you never see what is "behind" the navbar.
-            if (st > lastScrollTop && st > navbarHeight){
-                // Scroll Down
-                $('header').removeClass('nav-down').addClass('nav-up');
-            } else {
-                // Scroll Up
-                if(st + $(window).height() < $(document).height()) {
-                    $('header').removeClass('nav-up').addClass('nav-down');
-                }
-            }
-            
-            lastScrollTop = st;
-        }
-    </script>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
-
+    <script th:src="@{/js/search.js}"></script>
 </body>
 </html>

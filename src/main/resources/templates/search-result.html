@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${'搜索结果 - ' + query + ' - 学术搜索'}">搜索结果 - 学术搜索</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-search-heart"></i> 学术搜索
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/advanced">高级搜索</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">关于我们</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="/login" class="btn btn-outline-primary me-2">登录</a>
+                    <a href="/register" class="btn btn-primary">注册</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main class="main-container">
+        <div class="container">
+            <!-- 搜索框 -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form th:action="@{/search}" method="get" class="mb-0">
+                        <div class="input-group">
+                            <input type="text" 
+                                   name="q" 
+                                   class="form-control" 
+                                   th:value="${query}"
+                                   placeholder="输入关键词、标题、作者或DOI..." 
+                                   required
+                                   id="searchInput">
+                            <button type="submit" class="btn btn-accent">
+                                <i class="bi bi-search"></i> 搜索
+                            </button>
+                        </div>
+                        <div class="mt-2">
+                            <a href="#" id="advancedSearchToggle" class="small">显示高级搜索选项</a>
+                        </div>
+                        <div id="advancedSearch" class="d-none mt-3">
+                            <!-- 高级搜索选项 -->
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">作者</label>
+                                    <input type="text" name="author" class="form-control">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">年份</label>
+                                    <select class="form-select" name="year">
+                                        <option value="">任何年份</option>
+                                        <option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">文献类型</label>
+                                    <select class="form-select" name="type">
+                                        <option value="">任何类型</option>
+                                        <option value="journal">期刊论文</option>
+                                        <option value="conference">会议论文</option>
+                                        <option value="thesis">学位论文</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 搜索结果信息 -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="text-muted" th:text="${'找到 ' + totalResults + ' 条结果 (耗时 ' + searchTime + ' 秒)'}">
+                    找到 1,234 条结果 (耗时 0.45 秒)
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown">
+                        <span th:text="${'排序: ' + sortOption}">排序: 相关度</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" th:each="option : ${sortOptions}" th:text="${option}">相关度</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 搜索结果列表 -->
+            <div class="list-group mb-4">
+                <div th:each="result : ${results}" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">
+                            <a th:href="@{/paper/} + ${result.id}" th:text="${result.title}" class="text-decoration-none">
+                                论文标题示例
+                            </a>
+                        </h5>
+                        <button class="btn btn-sm save-paper-btn" th:attr="data-paper-id=${result.id}">
+                            <i class="bi bi-bookmark"></i>
+                            <span class="btn-text">收藏</span>
+                        </button>
+                    </div>
+                    <div class="mb-1">
+                        <span th:each="author,iter : ${result.authors}" class="me-2">
+                            <span th:text="${author}">作者姓名</span>
+                            <span th:if="${!iter.last}">,</span>
+                        </span>
+                    </div>
+                    <p class="mb-1 text-muted" th:text="${result.abstract}">这里是论文的摘要内容，通常会显示论文的主要研究内容和结论...</p>
+                    <small class="text-muted">
+                        <span th:text="${result.journal}">期刊名称</span> · 
+                        <span th:text="${result.year}">2023</span> · 
+                        <span th:text="${result.citations} + ' 次引用'">42 次引用</span>
+                    </small>
+                    <div class="mt-2">
+                        <span th:each="keyword : ${result.keywords}" class="badge bg-light text-dark me-1" th:text="${keyword}">关键词</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分页 -->
+            <nav th:if="${totalPages > 1}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{/search(q=${query}, page=${currentPage - 1})}">上一页</a>
+                    </li>
+                    <li th:each="page : ${#numbers.sequence(1, totalPages)}" 
+                        class="page-item" 
+                        th:classappend="${page == currentPage} ? 'active'">
+                        <a class="page-link" th:href="@{/search(q=${query}, page=${page})}" th:text="${page}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <a class="page-link" th:href="@{/search(q=${query}, page=${currentPage + 1})}">下一页</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>关于学术搜索</h5>
+                    <p class="text-muted">一个开放、免费的学术文献搜索平台，致力于为研究人员和学生提供便捷的文献检索服务。</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>快速链接</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/about" class="footer-link">关于我们</a></li>
+                        <li class="mb-2"><a href="/contact" class="footer-link">联系我们</a></li>
+                        <li class="mb-2"><a href="/privacy" class="footer-link">隐私政策</a></li>
+                        <li><a href="/terms" class="footer-link">使用条款</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>合作伙伴</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="footer-link">中国知网</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">IEEE Xplore</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Springer</a></li>
+                        <li><a href="#" class="footer-link">ScienceDirect</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>关注我们</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-white me-3"><i class="bi bi-wechat fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-weibo fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-github fs-4"></i></a>
+                    </div>
+                    <p class="text-muted mt-3">邮箱: contact@academicsearch.edu</p>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center">
+                <p class="mb-0">© 2023 学术搜索 - 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button id="backToTop" class="btn btn-primary rounded-circle position-fixed bottom-0 end-0 m-3" style="display: none;">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/search.js}"></script>
+</body>
+</html>
